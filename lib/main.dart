@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Login Screen with Validation
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -90,7 +89,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
-// API Selection Screen
 class ApiSelectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -103,7 +101,6 @@ class ApiSelectionScreen extends StatelessWidget {
   }
 }
 
-// Custom Widget for API Buttons
 class ApiButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -148,7 +145,6 @@ class ApiButtons extends StatelessWidget {
   }
 }
 
-// Cat Facts Screen with API Call
 class CatFactsScreen extends StatefulWidget {
   @override
   _CatFactsScreenState createState() => _CatFactsScreenState();
@@ -193,26 +189,33 @@ class _CatFactsScreenState extends State<CatFactsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Cat Facts')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: _fetchCatFact,
-              child: Text('Get Random Cat Fact'),
-            ),
-            SizedBox(height: 20),
-            if (_isLoading) CircularProgressIndicator(),
-            if (_catFact != null) Text(_catFact!),
-          ],
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: _fetchCatFact,
+                child: Text('Get Random Cat Fact'),
+              ),
+              SizedBox(height: 20),
+              if (_isLoading) CircularProgressIndicator(),
+              if (_catFact != null)
+                Center(
+                  child: Text(
+                    _catFact!,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-// Weather Search Screen with API Call
 class WeatherSearchScreen extends StatefulWidget {
   @override
   _WeatherSearchScreenState createState() => _WeatherSearchScreenState();
@@ -236,11 +239,11 @@ class _WeatherSearchScreenState extends State<WeatherSearchScreen> {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         final kelvinTemp = data['main']['temp'];
-        final celsiusTemp = kelvinTemp - 273.15;  // Convert Kelvin to Celsius
+        final celsiusTemp = kelvinTemp - 273.15;
 
         setState(() {
           _weatherInfo = 'City: ${data['name']}\n'
-              'Temperature: ${celsiusTemp.toStringAsFixed(1)}°C\n'  // Display Celsius with one decimal
+              'Temperature: ${celsiusTemp.toStringAsFixed(1)}°C\n'
               'Weather: ${data['weather'][0]['description']}';
         });
       } else {
@@ -258,7 +261,6 @@ class _WeatherSearchScreenState extends State<WeatherSearchScreen> {
       _isLoading = false;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
